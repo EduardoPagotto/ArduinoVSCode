@@ -5,7 +5,8 @@
             "includePath": [
                 "/opt/arduino-1.8.10/tools/**",
                 "/opt/arduino-1.8.10/hardware/arduino/avr/**",
-                "/opt/arduino-1.8.10/hardware/tools/avr/avr/include"
+                "/opt/arduino-1.8.10/hardware/tools/avr/avr/include",
+                "/opt/arduino-1.8.10/libraries/LiquidCrystal/src/"
             ],
             "forcedInclude": [
                 "/opt/arduino-1.8.10/hardware/arduino/avr/cores/arduino/Arduino.h"
