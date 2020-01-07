@@ -2,5 +2,5 @@
     "board": "arduino:avr:uno",
     "port": "/dev/ttyACM0",
     "output": "./bin",
-    "sketch": "./example/Kernel/KernelExample.ino"
+    "sketch": "src/Kernel/KernelExample.ino"
 }

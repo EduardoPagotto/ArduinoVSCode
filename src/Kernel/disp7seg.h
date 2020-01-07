@@ -1,7 +1,7 @@
 #ifndef DISP7SEG_H
 #define DISP7SEG_H
 
-//#define CATODO_COMUM 1
+//#define CATODO_COMUM
 #define ANODO_COMUM
 
 // Mapeamento de hardware
@@ -11,10 +11,10 @@
 #define DISPLAY_4 11
 
 // Definições gerais
-#if defined(CATODO_COMUM)
+#ifdef CATODO_COMUM
 #define LIGA 1
 #define DESLIGA 0
-#else defined(ANODO_COMUM)
+#else // ANODO_COMUM
 #define LIGA 0
 #define DESLIGA 1
 #endif
