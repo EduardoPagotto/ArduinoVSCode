@@ -39,9 +39,9 @@ unsigned char ucDisplay(char num) {
     };
 
 // No caso dos displays andodo comum, o valor é retornado com negação
-#if defined(CATODO_COMUM)
+#ifdef CATODO_COMUM
     return segmentos[num];
-#elif defined(ANODO_COMUM)
+#else
     return ~segmentos[num];
 #endif
 
