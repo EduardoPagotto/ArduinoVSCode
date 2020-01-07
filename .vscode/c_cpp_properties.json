@@ -3,6 +3,7 @@
         {
             "name": "Linux",
             "includePath": [
+                "/home/pagotto/Arduino/libraries/TimerOne",
                 "/opt/arduino-1.8.10/tools/**",
                 "/opt/arduino-1.8.10/hardware/arduino/avr/**",
                 "/opt/arduino-1.8.10/hardware/tools/avr/avr/include",

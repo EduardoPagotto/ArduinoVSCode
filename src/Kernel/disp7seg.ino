@@ -1,6 +1,8 @@
 
 #include "disp7seg.h"
 
+unsigned char DDRA, PORTA;
+
 unsigned char ucDisplay(char num);
 
 // Função vDisp7SegInit(): Inicializa os pinos utilizados para o controle do display

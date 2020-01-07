@@ -12,7 +12,7 @@
 #ifndef KERNEL_H
 #define KERNEL_H
 
-//#include <TimerOne.h> // Inclui a biblioteca do timer 1
+#include <TimerOne.h> // Inclui a biblioteca do timer 1
 
 // Definições para as tarefas
 #define NUMBER_OF_TASKS 3
