@@ -9,8 +9,8 @@ code --install-extension vsciot-vscode.vscode-arduino
 
 ## Liberacao da porta /dev/ttyACM0 no ubuntu para not-root (usuario comum)
 ```bash
-sudo usermod -a -G tty pagotto
-sudo usermod -a -G dialout pagotto
+sudo usermod -a -G tty $USER
+sudo usermod -a -G dialout $USER
 ```
 *OBS: logout do usuario para atualizar as diretivas
 
