@@ -15,8 +15,8 @@
 
 //---------------------------------------------------------------------------------------------------------------------
 
-#include "kernel.h"
 #include "avr/wdt.h"
+#include "kernel.h"
 
 //---------------------------------------------------------------------------------------------------------------------
 // Função vKernelInit()
@@ -25,7 +25,7 @@
 // Saida: nenhuma
 //---------------------------------------------------------------------------------------------------------------------
 char KernelInit() {
-    memset(buffer, NULL, sizeof(buffer)); // Inicializa o buffer para funções
+    memset(buffer, 0, sizeof(buffer)); // Inicializa o buffer para funções
     memset(taskCounter, 0, sizeof(taskCounter));
 
     TemporizadorEstourou = NAO;
@@ -44,7 +44,7 @@ char KernelInit() {
 // Parâmetros: funcao da tareda, nome, periodo, habilita e estrutura para guardar as informações da tarefa
 // Saida: nenhuma
 //---------------------------------------------------------------------------------------------------------------------
-char KernelAddTask(ptrFunc _function, unsigned char _nameFunction, uint16_t _period, char _enableTask,
+char KernelAddTask(ptrFunc _function, unsigned char* _nameFunction, uint16_t _period, char _enableTask,
                    TaskHandle* task) {
     int i;
 

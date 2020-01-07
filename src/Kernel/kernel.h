@@ -49,7 +49,7 @@ volatile bool TarefaSendoExecutada;
 // Protótipos de funções do Kernel
 //---------------------------------------------------------------------------------------------------------------
 char KernelInit(void);
-char KernelAddTask(ptrFunc _function, unsigned char _nameFunction, uint16_t _period, char _enableTask,
+char KernelAddTask(ptrFunc _function, unsigned char* _nameFunction, uint16_t _period, char _enableTask,
                    TaskHandle* task);
 char KernelRemoveTask(TaskHandle* task);
 void KernelStart(void);
