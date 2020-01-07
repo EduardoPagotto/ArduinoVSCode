@@ -1,5 +1,6 @@
 {
     "board": "arduino:avr:uno",
     "port": "/dev/ttyACM0",
-    "sketch": "SerialTeste.ino"
+    "sketch": "SerialTeste.ino",
+    "output": "./bin"
 }
