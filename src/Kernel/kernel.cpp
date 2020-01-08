@@ -1,33 +1,40 @@
-/* 1) Documentação
+/*
+    @kernel.cpp
 
-      @kernel.ino
+    Gerenciador de tarefas baseado num kernel cooperativo (não preemptivo)
+    Para isso, utilizou-se um buffer estático para armazenar as tarefas;
+    As tarefas são escalonadas de acordo com a interrupção do Timer 1. Este verifica o tempo restante para
+    cada tarefa ser executada. A tarefa que atingir o tempo primeiro, será executada.
+    As "prioridades" das tarefas é por ordem de adição no buffer.
 
-      Este código trata-se de um gerenciador de tarefas baseado num kernel cooperativo (não preemptivo)
-      Para isso, utilizou-se um buffer estático para armazenar as tarefas;
-      As tarefas são escalonadas de acordo com a interrupção do Timer 1. Este verifica o tempo restante para
-      cada tarefa ser executada. A tarefa que atingir o tempo primeiro, será executada.
-      As "prioridades" das tarefas é por ordem de adição no buffer.
-
-      Autor: Caio Moraes
-      Data: março/2017
-      Versão: V01
+    Autor: Eduardo Pagotto
+    Data: 2020-01
+    VVersão: 0.0.0
 */
 
-//---------------------------------------------------------------------------------------------------------------------
-
-#include "avr/wdt.h"
 #include "kernel.h"
+#include "avr/wdt.h"
+#include <TimerOne.h> // Inclui a biblioteca do timer 1
+
+// Definição do buffer para armazenar as tarefas
+TaskHandle* buffer[NUMBER_OF_TASKS];
+
+// Variáveis do kernel
+volatile uint32_t taskCounter[NUMBER_OF_TASKS];
+volatile int16_t TempoEmExecucao;
+volatile uint32_t sysTickCounter;
+volatile bool TemporizadorEstourou;
+volatile bool TarefaSendoExecutada;
 
 //---------------------------------------------------------------------------------------------------------------------
 // Função vKernelInit()
 // Descrição: Inicializa as variáveis utilizadas pelo kernel, e o temporizador resposável pelo tick
-// Parâmetros: nenhum
-// Saida: nenhuma
 //---------------------------------------------------------------------------------------------------------------------
 char KernelInit() {
     memset(buffer, 0, sizeof(buffer)); // Inicializa o buffer para funções
-    memset(taskCounter, 0, sizeof(taskCounter));
+    memset((void*)taskCounter, 0, sizeof(taskCounter));
 
+    sysTickCounter = 0;
     TemporizadorEstourou = NAO;
     TarefaSendoExecutada = NAO;
 
@@ -36,13 +43,12 @@ char KernelInit() {
     Timer1.attachInterrupt(IsrTimer); // chama vIsrTimer() quando o timer estoura
 
     return SUCCESS;
-} // end vKernelInit
+}
 
 //---------------------------------------------------------------------------------------------------------------------
 // Função KernelAddTask()
 // Descrição: Adiciona uma nova Tarefa ao pool
 // Parâmetros: funcao da tareda, nome, periodo, habilita e estrutura para guardar as informações da tarefa
-// Saida: nenhuma
 //---------------------------------------------------------------------------------------------------------------------
 char KernelAddTask(ptrFunc _function, unsigned char* _nameFunction, uint16_t _period, char _enableTask,
                    TaskHandle* task) {
@@ -67,13 +73,11 @@ char KernelAddTask(ptrFunc _function, unsigned char* _nameFunction, uint16_t _pe
         }
     }
     return FAIL;
-} // end vKernelAddTask
+}
 
 //---------------------------------------------------------------------------------------------------------------------
 // Função KernelRemoveTask()
 // Descrição: de forma contrária a função KernelAddTask, esta função remove uma Tarefa do buffer circular
-// Parâmetros: Nenhum
-// Saída: Nenhuma
 //---------------------------------------------------------------------------------------------------------------------
 char KernelRemoveTask(TaskHandle* task) {
     int i;
@@ -84,8 +88,7 @@ char KernelRemoveTask(TaskHandle* task) {
         }
     }
     return FAIL;
-
-} // end vKernelRemoveTask
+}
 
 //---------------------------------------------------------------------------------------------------------------------
 // Função KernelStart()
@@ -112,7 +115,7 @@ void KernelStart() {
             TemporizadorEstourou = NAO;
         }
     }
-} // end vKernelStart
+}
 
 //---------------------------------------------------------------------------------------------------------------------
 // Trata a Interrupção do timer 1
@@ -121,9 +124,7 @@ void KernelStart() {
 // algum travamento
 //---------------------------------------------------------------------------------------------------------------------
 void IsrTimer() {
-    int i;
     TemporizadorEstourou = SIM;
-
     sysTickCounter++;
 
     // Conta o tempo em que uma tarefa está em execução
@@ -136,4 +137,4 @@ void IsrTimer() {
                 ;
         }
     }
-} // end vIsrTimer
+}

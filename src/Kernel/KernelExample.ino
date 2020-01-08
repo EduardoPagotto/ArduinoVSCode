@@ -28,9 +28,6 @@
 
 #define TIME_INTERVAL 500
 
-#define SIM 1
-#define NAO 0
-
 //---------------------------------------------------------------------------------------------------------------------
 // 3) Declarações Globais
 boolean botao1FoiPressionado, botao2FoiPressionado;

@@ -1,18 +1,22 @@
 /*
  * @kernel.h
  *
- * Header file: contem todas as macros, variáveis globais e protótipos de funções
+ * Header file: protótipos de funções
  *              utilizados pelo kernel
  *
- * Autor: Caio Moraes
- * Data: março/2017
- * Versão: V01
+ * Autor: Eduardo Pagotto
+ * Data: 2020-01
+ * Versão: 0.0.0
  */
 
-#ifndef KERNEL_H
-#define KERNEL_H
+#ifndef KERNEL_ZERO_RTOS_H
+#define KERNEL_ZERO_RTOS_H
 
-#include <TimerOne.h> // Inclui a biblioteca do timer 1
+#include <Arduino.h>
+
+//---------------------------------------------------------------------------------------------------------------
+// Definicioe do Kernel
+//---------------------------------------------------------------------------------------------------------------
 
 // Definições para as tarefas
 #define NUMBER_OF_TASKS 3
@@ -21,11 +25,11 @@
 // Definições gerais
 #define SUCCESS 1
 #define FAIL 0
+#define SIM true
+#define NAO false
 
-//---------------------------------------------------------------------------------------------------------------
-// Variáveis do Kernel
-//---------------------------------------------------------------------------------------------------------------
-typedef void (*ptrFunc)(); // Definição ponteiro de função
+// Definição ponteiro de função
+typedef void (*ptrFunc)();
 
 // Definição da estrutura que contem as informações das tarefas
 typedef struct {
@@ -35,15 +39,8 @@ typedef struct {
     bool enableTask;
 } TaskHandle;
 
-// Definição do buffer para armazenar as tarefas
-TaskHandle* buffer[NUMBER_OF_TASKS];
-
-// Variáveis globais do kernel
-volatile uint32_t taskCounter[NUMBER_OF_TASKS];
-volatile int16_t TempoEmExecucao;
-volatile uint32_t sysTickCounter = 0;
-volatile bool TemporizadorEstourou;
-volatile bool TarefaSendoExecutada;
+// Declaração de variaveis globais (Definições em kernel.cpp)
+extern volatile uint32_t sysTickCounter;
 
 //---------------------------------------------------------------------------------------------------------------
 // Protótipos de funções do Kernel
@@ -53,5 +50,6 @@ char KernelAddTask(ptrFunc _function, unsigned char* _nameFunction, uint16_t _pe
                    TaskHandle* task);
 char KernelRemoveTask(TaskHandle* task);
 void KernelStart(void);
+void IsrTimer(void);
 
 #endif
