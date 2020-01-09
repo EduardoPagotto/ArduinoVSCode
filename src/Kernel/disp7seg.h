@@ -1,6 +1,8 @@
 #ifndef DISP7SEG_H
 #define DISP7SEG_H
 
+#include <Arduino.h>
+
 //#define CATODO_COMUM
 #define ANODO_COMUM
 

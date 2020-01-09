@@ -3,8 +3,6 @@
 
 unsigned char DDRA, PORTA;
 
-unsigned char ucDisplay(char num);
-
 // Função vDisp7SegInit(): Inicializa os pinos utilizados para o controle do display
 // Parâmetros: nenhum
 // Saída: nenhuma
